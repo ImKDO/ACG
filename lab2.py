@@ -7,13 +7,10 @@ import math
 
 APP_TITLE = "Filters (Custom Implementation): Grey, Blur, Contrast, Brightness, Invert"
 
-# --------- helpers ---------
-# Эта часть остается без изменений
 def pil_to_tk(img, max_w, max_h):
     """Конвертирует изображение PIL в формат, понятный Tkinter."""
     if img is None: return None
     w, h = img.size
-    # Предотвращение деления на ноль, если изображение имеет нулевой размер
     scale = min(max_w / w, max_h / h) if w and h else 1.0
     scale = max(scale, 1e-6) # Убедимся, что масштаб не нулевой
     thumb = img.resize((max(1,int(w*scale)), max(1,int(h*scale))), Image.LANCZOS)
@@ -38,7 +35,6 @@ def find_builtin_picture(base_name: str) -> str | None:
             return m
     return None
 
-# --------- Custom Image Processing Algorithms (Optimized) ---------
 
 def clamp(value, min_val=0, max_val=255):
     """Ограничивает значение диапазоном [min_val, max_val]."""
@@ -52,7 +48,6 @@ def apply_custom_grayscale(image: Image.Image) -> Image.Image:
     for y in range(height):
         for x in range(width):
             r, g, b = src_pixels[x, y]
-            # Стандартная формула для вычисления яркости (Luminosity)
             lum = clamp(0.299 * r + 0.587 * g + 0.114 * b)
             new_pixels.append((lum, lum, lum))
     
@@ -99,7 +94,6 @@ def apply_custom_contrast(image: Image.Image, factor: float) -> Image.Image:
     for y in range(height):
         for x in range(width):
             r, g, b = src_pixels[x, y]
-            # Формула для изменения контраста относительно среднего серого (128)
             new_r = clamp(128 + factor * (r - 128))
             new_g = clamp(128 + factor * (g - 128))
             new_b = clamp(128 + factor * (b - 128))
@@ -145,7 +139,6 @@ def apply_custom_gaussian_blur(image: Image.Image, radius: float) -> Image.Image
             r_sum, g_sum, b_sum = 0.0, 0.0, 0.0
             for ky in range(kernel_size):
                 for kx in range(kernel_size):
-                    # Определение координат пикселя-соседа с учетом границ изображения
                     px = clamp(x + (kx - center), 0, width - 1)
                     py = clamp(y + (ky - center), 0, height - 1)
                     
@@ -163,7 +156,6 @@ def apply_custom_gaussian_blur(image: Image.Image, radius: float) -> Image.Image
     return new_image
 
 
-# --------- app ---------
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
