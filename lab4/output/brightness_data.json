@@ -1,0 +1,21 @@
+{
+  "min_brightness": 0.0,
+  "max_brightness": 1.5337097163409932,
+  "sample_points": [
+    {
+      "pixel_x": 400,
+      "pixel_y": 400,
+      "brightness": 0.6727608071111059
+    },
+    {
+      "pixel_x": 200,
+      "pixel_y": 400,
+      "brightness": 0.02144165410030624
+    },
+    {
+      "pixel_x": 600,
+      "pixel_y": 200,
+      "brightness": 0.0
+    }
+  ]
+}
